@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>해바라기반 반장선거</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <!-- <td><B>번호</B></td>
+            <td><B>이름</B></td>
+            <td><B>소개</B></td>
+            <td><B>동네</B></td> -->
+            <td><B>icc1</B></td>
+            <td><B>icc2</B></td>
+            <td><B>net이름</B></td>
+            <td><B>아무말1</B></td>
+            <td><B>아무말2</B></td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for candidate in candidates %}
+        <tr>
+            <td>{{candidate.icc1}} A</td>
+            <td>{{candidate.icc2}} mA</td>
+            <td>{{candidate.name}}</td>
+            <td>{{candidate.sample}}</td>
+            <td>{{candidate.Field5}}</td>
+        </tr>
+        {% endfor %}
+        <tbody>
+    </table>
+</body>
