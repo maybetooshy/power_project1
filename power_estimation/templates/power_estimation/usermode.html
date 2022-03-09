@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Power Estimation Party ! ! !</title>
+    <style>
+        #header {
+            background-color:lightgrey;
+            height:100px;
+        }
+        #nav {
+            background-color:#339999;
+            color:white;
+            width:200px;
+            height:1500px;
+            float:left;
+        }
+        #section_side {
+            background-color:blue;
+            width:300px;
+            text-align:center;
+            float:left;
+            /*padding:10px;*/
+            height:1500px;
+        }
+        #section {
+            background-color: skyblue;
+            width:2000px;
+            text-align:center;
+            float:left;
+            height:1500px;
+        }
+        #footer {
+            background-color:#FFCC00;
+            height:100px;
+            clear:both;
+        }
+        #header, #nav, #footer { text-align:center; }
+        #header, #footer { line-height:100px; }
+        #nav, #section_side { line-height:50px; }
+        
+        /* table border for whole table*/
+        .table-bordered {
+            border: 1px solid #e3e6f0;
+        }
+        
+        /* table border for each cell*/
+        .table-bordered th,
+        .table-bordered td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border: 1px solid #e3e6f0;
+        }
+
+        /* table border bottom line for head cells*/
+        .table-bordered thead th,
+        .table-bordered thead td {
+            border-bottom-width: 2px;
+        }
+
+        /* card */
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid #e3e6f0;
+            border-radius: 0.35rem;
+        }
+        
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1.25rem;
+        }
+        
+        .card-title {
+            margin-bottom: 0.75rem;
+        }
+        
+        .card-header {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            background-color: green;
+            border-bottom: 1px solid #e3e6f0;
+        }
+        
+    </style>
+    <!-- Custom styles for this template-->
+    <!-- <link href="{% static 'power_estimation/test.css' %}" rel="stylesheet">
+    <link href="{% static 'power_estimation/style.css' %}" rel="stylesheet"> -->
+    
+</head>
+
+
+<body>
+
+    <h1>Let's Go, Power Estimation !</h1>
+	<div id="header">
+		<h2>Welcome to Power Estimation Party ! ! !</h2>
+	</div>
+	<div id="nav">
+		<li class="nav-item active">
+            <a class="nav-link" href="{% url 'power_estimation:index' %}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <h2>Home</h2></a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'power_estimation:test2' %}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Test Mode</span></a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'power_estimation:user' %}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>User Mode</span></a>
+        </li>
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'power_estimation:expert' %}">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Expert Mode</span></a>
+        </li>
+
+	</div>
+	<div id="section_side">
+		<p>User Mode Page</p>
+
+        <form action="{% url 'power_estimation:selected' %}" method="get">      
+            {% csrf_token %}   
+            <select name="CTRL를 골라보자 !">
+                <option value="You Must Choose. . ." selected>CTRL를 골라보자 ! </option>
+                <option value="ctrl_2">옛다 선택했다!</option>
+            </select>
+            <input type="submit" value="select CTRL">
+        </form><br>
+        
+        <!-- {% for candidate in candidates %}
+        <p>
+            {{candidate.ud}} {{candidate.nd}} {{candidate.phyh}} {{candidate.phyl}}
+        </p>
+        {% endfor %} -->
+                
+        <li>
+            {{ candidates }}
+        </li>
+
+        <select name="DRAM를 골라보자 !">
+            <option value="You Must Choose. . ." selected>DRAM를 골라보자 ! </option>
+            <option value="dram_2">옛다 선택했다!</option>
+        </select>
+        <input type="submit" value="select DRAM"><br>
+        
+        <select name="NAND를 골라보자 !">
+            <option value="You Must Choose. . ." selected>NAND를 골라보자 ! </option>
+            <option value="nand_2">옛다 선택했다!</option>
+        </select>
+        <input type="submit" value="select NAND"><br>
+
+	</div>
+
+    <div id="section">
+        <h1>DataTables Example</h1>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width='100%' cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th width="100px">Net Name</th>
+                                <th width="300px">Idle</th>
+                                <th width="300px">Seq.Write</th>
+                                <th width="300px">Seq.Read</th>
+                                <th width="300px">Rand.Write</th>
+                                <th width="300px">Rand.Read</th>
+                            </tr>
+                        </thead>
+
+                        {% for candidate in candidates %}
+                        <tbody>
+
+                            <tr>
+                                <td>Core UD</td>
+                                <td>{{candidate.ud}}</td>
+                                <td>{{candidate.ud}}</td>
+                                <td>{{candidate.ud}}</td>
+                                <td>{{candidate.ud}}</td>
+                                <td>{{candidate.ud}}</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>Core ND</td>
+                                <td>{{candidate.nd}}</td>
+                                <td>{{candidate.nd}}</td>
+                                <td>{{candidate.nd}}</td>
+                                <td>{{candidate.nd}}</td>
+                                <td>{{candidate.nd}}</td>
+                            </tr>
+                            <tr>
+                                <td>PHYH</td>
+                                <td>{{candidate.phyh}}</td>
+                                <td>{{candidate.phyh}}</td>
+                                <td>{{candidate.phyh}}</td>
+                                <td>{{candidate.phyh}}</td>
+                                <td>{{candidate.phyh}}</td>
+                            </tr>
+                            <tr>
+                                <td>PHYL</td>
+                                <td>{{candidate.phyl}}</td>
+                                <td>{{candidate.phyl}}</td>
+                                <td>{{candidate.phyl}}</td>
+                                <td>{{candidate.phyl}}</td>
+                                <td>{{candidate.phyl}}</td>
+                            </tr>
+                            {% endfor %}
+
+                            
+                        </tbody>
+                    </table>
+                </div> 
+            </div>
+        </div>    
+        
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">Charts</h1>
+            <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
+                The charts below have been customized - for further customization options, please visit the <a
+                    target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
+                    documentation</a>.</p>
+
+            <!-- Content Row -->
+            <div class="row">
+
+                <div class="col-xl-8 col-lg-7">
+
+                    <!-- Bar Chart -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h2 class="m-0 font-weight-bold text-primary">Bar Chart</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-bar">
+                                <div id="container" style="width: 100%;">
+                                    <canvas id="mychart"></canvas>
+                                </div>
+                                
+                                    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+                                    <script>                   
+                                                                              
+                                        var ctx = document.getElementById('mychart').getContext("2d");
+                                        var myChart = new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Idle', 'SW', 'SR', 'RW', 'RR'],
+                                                datasets: [{
+                                                    label: 'ud',
+                                                    backgroundColor: 'green',
+                                                    data: [{% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}],
+                                                },
+                                                {
+                                                    label: 'nd',
+                                                    backgroundColor: 'blue',
+                                                    data: [{% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}],
+                                                },
+                                                {
+                                                    label: 'phyh',
+                                                    backgroundColor: 'black',
+                                                    data: [{% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}],
+                                                },
+                                                {
+                                                    label: 'phyl',
+                                                    backgroundColor: 'red',
+                                                    data: [{% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
+                                                           {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}],
+                                                },
+                                                ]          
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                scales:{
+                                                    x:{
+                                                        stacked:true,
+                                                    },
+                                                    y:{
+                                                        min:0,
+                                                        stacked:true,
+                                                        display:true,
+                                                        ticks: {
+                                                            stepSize: 0.5,
+                                                        },
+                                                    },
+                                                },
+                                                legend: {
+                                                    position: 'top',
+                                                },
+                                                title: {
+                                                    display: true,
+                                                    text: 'Population Bar Chart'
+                                                }
+                                            }
+                                        });
+                                                                           
+                                    
+                                    
+                                    </script>
+                                
+                            </div>
+                            <hr>
+                            Styling for the bar chart can be found in the
+                            <code>/js/demo/chart-bar-demo.js</code> file.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div id="footer">
+		<h2>FOOTER 영역</h2>
+	</div>
+
+</body>
+
+    
+
+</html>

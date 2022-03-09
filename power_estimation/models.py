@@ -1,3 +1,4 @@
+from statistics import mode
 from django.db import models
 
 # Create your models here.
@@ -17,5 +18,15 @@ class parameter(models.Model):
     sample = models.CharField(max_length=10)
     Field5 = models.FloatField(max_length=10)
     
+    def __str__(self):
+        return self.name
+
+class ctrl(models.Model):
+    name = models.CharField(max_length=10)
+    ud = models.FloatField(max_length=10)
+    nd = models.FloatField(max_length=10)
+    phyh = models.FloatField(max_length=10)
+    phyl = models.FloatField(max_length=10)
+
     def __str__(self):
         return self.name
