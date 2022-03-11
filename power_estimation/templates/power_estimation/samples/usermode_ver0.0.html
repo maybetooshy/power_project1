@@ -127,13 +127,6 @@
                 <span>User Mode</span></a>
         </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'power_estimation:user2' %}">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>User Mode2</span></a>
-        </li>
-
         <!-- Nav Item - Tables -->
         <li class="nav-item">
             <a class="nav-link" href="{% url 'power_estimation:expert' %}">
@@ -161,7 +154,7 @@
         {% endfor %} -->
                 
         <li>
-            {% for candidate in candidates %} {{ candidate.name }} {% endfor %}
+            {{ candidates }}
         </li>
 
         <select name="DRAM를 골라보자 !">
@@ -250,7 +243,11 @@
 
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Charts</h1>
-            
+            <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
+                The charts below have been customized - for further customization options, please visit the <a
+                    target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
+                    documentation</a>.</p>
+
             <!-- Content Row -->
             <div class="row">
 
@@ -264,7 +261,7 @@
                         <div class="card-body">
                             <div class="chart-bar">
                                 <div id="container" style="width: 100%;">
-                                    <canvas id="mychart"></canvas>
+                                    <canvas id="mychart" url="{% url 'power_estimation:mychart' %}"></canvas>
                                 </div>
                                 
                                     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -272,77 +269,91 @@
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
                                     <script>                   
-                                                                              
-                                        var ctx = document.getElementById('mychart').getContext("2d");
+                                        
+                                        $(function (){
+                                            
+                                            var $sampleChart = $("#mychart");
 
-                                        var myChart = new Chart(ctx, {
-                                            type: 'bar',
-                                            data: {
-                                                labels: ['Idle', 'SW', 'SR', 'RW', 'RR'],
-                                                datasets: [
-                                                    {
-                                                    label: 'ud',
-                                                    backgroundColor: 'green',                                                    
-                                                    data: [{% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.ud }}', {% endfor %}],
-                                                    },
-                                                    {
-                                                    label: 'nd',
-                                                    backgroundColor: 'blue',
-                                                    data: [{% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}],
-                                                    },
-                                                    {
-                                                    label: 'phyh',
-                                                    backgroundColor: 'black',
-                                                    data: [{% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}],
-                                                    },
-                                                    {
-                                                    label: 'phyl',
-                                                    backgroundColor: 'red',
-                                                    data: [{% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
-                                                        {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}],
-                                                    },
-                                                ]          
-                                            },
-                                            options: {
-                                                responsive: true,
-                                                scales:{
-                                                    x:{
-                                                        stacked:true,
-                                                    },
-                                                    y:{
-                                                        min:0,
-                                                        stacked:true,
-                                                        display:true,
-                                                        ticks: {
-                                                            stepSize: 0.1,
+                                            $.ajax({
+                                                // url: $sampleChart.data("url"),
+                                                url: '/power_estimation/mychart/',
+                                                success: function(data) {
+                                                    console.log($sampleChart.data("url"))
+
+                                                    var ctx = $sampleChart[0].getContext("2d");
+
+                                                    var myChart = new Chart(ctx, {
+                                                        type: 'bar',
+                                                        data: {
+                                                            labels: ['Idle', 'SW', 'SR', 'RW', 'RR'],
+                                                            datasets: [{
+                                                                label: 'ud',
+                                                                backgroundColor: 'green',
+                                                                data: data.data,
+                                                            },
+                                                            //     data: [{% for candidate in candidates_chart %} '{{ candidate.ud }}', {% endfor %}
+                                                            //         {% for candidate in candidates_chart %} '{{ candidate.ud }}', {% endfor %}
+                                                            //         {% for candidate in candidates_chart %} '{{ candidate.ud }}', {% endfor %}
+                                                            //         {% for candidate in candidates_chart %} '{{ candidate.ud }}', {% endfor %}
+                                                            //         {% for candidate in candidates_chart %} '{{ candidate.ud }}', {% endfor %}],
+                                                            // },
+                                                            // {
+                                                            //     label: 'nd',
+                                                            //     backgroundColor: 'blue',
+                                                            //     data: [{% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.nd }}', {% endfor %}],
+                                                            // },
+                                                            // {
+                                                            //     label: 'phyh',
+                                                            //     backgroundColor: 'black',
+                                                            //     data: [{% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.phyh }}', {% endfor %}],
+                                                            // },
+                                                            // {
+                                                            //     label: 'phyl',
+                                                            //     backgroundColor: 'red',
+                                                            //     data: [{% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}
+                                                            //         {% for candidate in candidates %} '{{ candidate.phyl }}', {% endfor %}],
+                                                            // },
+                                                            ]          
                                                         },
-                                                    },
-                                                },
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Population Bar Chart'
-                                                }
-                                            }
+                                                        options: {
+                                                            responsive: true,
+                                                            scales:{
+                                                                x:{
+                                                                    stacked:true,
+                                                                },
+                                                                y:{
+                                                                    min:0,
+                                                                    stacked:true,
+                                                                    display:true,
+                                                                    ticks: {
+                                                                        // stepSize: 0.2,
+                                                                    },
+                                                                },
+                                                            },
+                                                            legend: {
+                                                                position: 'top',
+                                                            },
+                                                            title: {
+                                                                display: true,
+                                                                text: 'Population Bar Chart'
+                                                            }
+                                                        }
+                                                    });
+                                                } 
+                                            });
+                                    
                                         });
-                                                
                                     </script>
                                 
                             </div>

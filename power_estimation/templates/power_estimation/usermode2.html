@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Welcome to Power Estimation Party ! ! !</title>
+    <style>
+        #header {
+            background-color: lightgrey;
+            height: 100px;
+        }
+
+        #nav {
+            background-color: #339999;
+            color: white;
+            width: 200px;
+            height: 1500px;
+            float: left;
+        }
+
+        #section_side {
+            background-color: blue;
+            width: 300px;
+            text-align: center;
+            float: left;
+            /*padding:10px;*/
+            height: 1500px;
+        }
+
+        #section_up {
+            background-color: blue;
+            width: 2300px;
+            text-align: center;
+            float: left;
+            /*padding:10px;*/
+            height: 500px;
+        }
+
+        #section {
+            background-color: skyblue;
+            width: 2300px;
+            text-align: center;
+            float: left;
+            height: 1000px;
+        }
+
+        #footer {
+            background-color: #FFCC00;
+            height: 100px;
+            clear: both;
+        }
+
+        #header,
+        #nav,
+        #footer {
+            text-align: center;
+        }
+
+        #header,
+        #footer {
+            line-height: 100px;
+        }
+
+        #nav,
+        #section_side {
+            line-height: 50px;
+        }
+
+        /* table border for whole table*/
+        .table-bordered {
+            border: 1px solid #e3e6f0;
+        }
+
+        /* table border for each cell*/
+        .table-bordered th,
+        .table-bordered td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border: 1px solid #e3e6f0;
+        }
+
+        /* table border bottom line for head cells*/
+        .table-bordered thead th,
+        .table-bordered thead td {
+            border-bottom-width: 2px;
+        }
+
+        /* card */
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 32%;
+            word-wrap: break-word;
+            background-color: green;
+            background-clip: border-box;
+            border: 1px solid #e3e6f0;
+            border-radius: 0.35rem;
+            margin: 10px;
+            height: 400px;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            width: 100%;
+            background-color: white;
+            height: 100%;
+        }
+
+        .card-title {
+            margin-bottom: 0.75rem;
+        }
+
+        .card-header {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            background-color: green;
+            border-bottom: 1px solid #e3e6f0;
+        }
+
+        .col-1,
+        .col-2,
+        .col-3,
+        .col-4,
+        .col-5,
+        .col-6,
+        .col-7,
+        .col-8,
+        .col-9,
+        .col-10,
+        .col-11,
+        .col-12,
+        .col,
+        .col-auto,
+        .col-sm-1,
+        .col-sm-2,
+        .col-sm-3,
+        .col-sm-4,
+        .col-sm-5,
+        .col-sm-6,
+        .col-sm-7,
+        .col-sm-8,
+        .col-sm-9,
+        .col-sm-10,
+        .col-sm-11,
+        .col-sm-12,
+        .col-sm,
+        .col-sm-auto,
+        .col-md-1,
+        .col-md-2,
+        .col-md-3,
+        .col-md-4,
+        .col-md-5,
+        .col-md-6,
+        .col-md-7,
+        .col-md-8,
+        .col-md-9,
+        .col-md-10,
+        .col-md-11,
+        .col-md-12,
+        .col-md,
+        .col-md-auto,
+        .col-lg-1,
+        .col-lg-2,
+        .col-lg-3,
+        .col-lg-4,
+        .col-lg-5,
+        .col-lg-6,
+        .col-lg-7,
+        .col-lg-8,
+        .col-lg-9,
+        .col-lg-10,
+        .col-lg-11,
+        .col-lg-12,
+        .col-lg,
+        .col-lg-auto,
+        .col-xl-1,
+        .col-xl-2,
+        .col-xl-3,
+        .col-xl-4,
+        .col-xl-5,
+        .col-xl-6,
+        .col-xl-7,
+        .col-xl-8,
+        .col-xl-9,
+        .col-xl-10,
+        .col-xl-11,
+        .col-xl-12,
+        .col-xl,
+        .col-xl-auto {
+            position: relative;
+            width: 100%;
+            padding-right: 0.75rem;
+            padding-left: 0.75rem;
+        }
+
+        .col {
+            flex-basis: 0;
+            flex-grow: 1;
+            max-width: 100%;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            margin-right: 0.75rem;
+            margin-left: 0.75rem;
+        }
+
+        .tree {
+            color: #393939;
+        }
+
+        .tree,
+        .tree ul {
+            list-style: none;
+            padding-left: 25px;
+        }
+
+        .tree *:before {
+            width: 25px;
+            height: 30px;
+            display: inline-block;
+        }
+
+        .tree label {
+            cursor: pointer;
+        }
+
+        .tree label:before {
+            content: '\f256';
+            font-family: fontello;
+        }
+
+        .tree a {
+            text-decoration: none;
+            color: #393939;
+        }
+
+        .tree a:before {
+            content: '\e800';
+            font-family: fontello;
+        }
+
+        .tree input[type="checkbox"] {
+            display: none;
+        }
+
+        .tree input[type="checkbox"]:checked~ul {
+            display: none;
+        }
+
+        .tree input[type="checkbox"]:checked+label:before {
+            content: '\f255';
+            font-family: fontello;
+        }
+
+        .border {
+            border: 1px solid gold;
+            float: left;
+            width: 49%;
+            height: 100%;
+        }
+    </style>
+    <link href="{% static 'power_estimation/fonts/fontello/css/fontello.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <!-- <link href="{% static 'power_estimation/test.css' %}" rel="stylesheet">
+    <link href="{% static 'power_estimation/style.css' %}" rel="stylesheet"> -->
+
+</head>
+
+
+<body>
+
+    <h1>Let's Go, Power Estimation !</h1>
+    <div id="header">
+        <h2>Welcome to Power Estimation Party ! ! !</h2>
+    </div>
+    <div id="nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'power_estimation:index' %}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <h2>Home</h2>
+            </a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'power_estimation:test2' %}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Test Mode</span></a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'power_estimation:user' %}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>User Mode</span></a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'power_estimation:user2' %}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>User Mode2</span></a>
+        </li>
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'power_estimation:expert' %}">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Expert Mode</span></a>
+        </li>
+
+    </div>
+    <div id="section_up">
+        <p>User Mode Page</p>
+
+        <div class="row">
+            <div class="card">
+                <p> aaa </p>
+
+                <div class="card-body">
+                    <ul class="tree">
+                        <li>
+                            <input type="checkbox" id="root">
+                            <label for="root">ROOT</label>
+                            <ul>
+                                <li><a>node1</a></li>
+                                <li><a>node2</a></li>
+                                <li>
+                                    <input type="checkbox" id="node3">
+                                    <label for="node3">node3</label>
+                                    <ul>
+                                        <li><a>node31</a></li>
+                                        <li><a>node32</a></li>
+                                        <li><a>node33</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="card">
+                <p> ccc </p>
+
+                <div class="card-body">
+                    <div class="border">
+                        <!-- 출력하는 곳, 형식. id로 mapping! -->
+                        <form id="post">
+                            {% csrf_token %}
+                            <input type="checkbox" id="check" ></li>
+                            <label for="check" id=filepath></label>  
+                        </form>    
+
+                        <li id="filepath2"></li><br>
+
+                        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                        <script>
+                            $(document).ready(function () {
+                                
+                                $.ajax({
+                                    url: "/power_estimation/filepath", // 어디로 갈거니? // 갈 때 데이터
+                                    type: "get", // 타입은 뭘 쓸거니?
+                                    datatype: "json",
+                                    success: function (data) { // 갔다온 다음 결과값
+                                        //	alert('success');	// 나오면 파일을 찾았다는 것
+                                        //	alert(data);  // [object Object],[object Object],[object Object]
+
+                                        // 데이터를 확인하고 싶을 때.
+                                        //	let str = JSON.stringify(data); // <> parse()
+                                        //	alert(str); 
+
+                                        $.each(data, function (index, item) { // 데이터 =item
+                                            // $("#filepath").append(index + " "); // index가 끝날때까지 
+                                            $("#filepath").append(item[0] + " <br> ");
+                                            $("#filepath2").append(item[1] + " <br> ");
+                                            
+                                        });
+                                        // alert($('#filepath').text())
+                                    },
+                                    error: function () {
+                                        alert('error');
+
+                                    }
+                                });
+
+                                
+                            });
+                            // 선택된 값을 저장 --> 그 값이 string으로 들어가는 url로 선택될 때마다 분기 --> 그 분기된 함수에서 값 가져오게 ㄱㄱ
+                            // https://www.youtube.com/watch?v=hF0vz_NK4oc 참고
+                            $('#post').on('click', function reqCTRL(){
+                                var name = $('#filepath').text(); 
+                                console.log('hi')
+                                $.ajax({
+                                    url: "/power_estimation/filepath2",
+                                    method: 'post',
+                                    data: {
+                                        //'name':name,
+                                        'name':name,
+                                    },
+                                    success: function(){
+                                        alert('success')
+                                        
+                                    },
+                                        
+                                    error: function () {
+                                        alert('error2');
+                                        //alert($('#filepath').text())
+
+                                    },
+                                });
+                            });
+                        </script>
+
+                    </div>
+                    <div class="border">
+
+                        <input type="checkbox" id="check1"></li>
+                        <label for="check1" id=123></label>                                            
+                        <li id="456"></li><br>
+
+                        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                        <script>
+                            $(document).ready(function () {
+                                $('#check').on('click', function reqCTRL(){
+                                    $.ajax({
+                                        url: "/power_estimation/filepath2", // 어디로 갈거니? // 갈 때 데이터
+                                        type: "get", // 타입은 뭘 쓸거니?
+                                        datatype: "json",
+                                        success: function (data) { // 갔다온 다음 결과값
+                                            // alert('success2');	// 나오면 파일을 찾았다는 것
+                                            //	alert(data);  // [object Object],[object Object],[object Object]
+
+                                            // 데이터를 확인하고 싶을 때.
+                                            //	let str = JSON.stringify(data); // <> parse()
+                                            //	alert(str); 
+
+                                            $.each(data, function (index, item) { // 데이터 =item
+                                                // $("#filepath").append(index + " "); // index가 끝날때까지 
+                                                $("#123").append(item[0] + " <br> ");
+                                                $("#456").append(item[1] + " <br> ");
+
+                                            });
+
+                                        },
+                                        error: function () {
+                                            // alert('error');
+                                            alert('error3');
+
+                                        }
+                                    });
+                                });
+                                
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <p> eee </p>
+
+                <div class="card-body">
+                    <p> {% for candidate in context %} {{ candidate }} {% endfor %} </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section">
+        <h1>DataTables Example</h1>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width='100%' cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th width="100px">Net Name</th>
+                                <th width="300px">Idle</th>
+                                <th width="300px">Seq.Write</th>
+                                <th width="300px">Seq.Read</th>
+                                <th width="300px">Rand.Write</th>
+                                <th width="300px">Rand.Read</th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+                                <td>Core UD</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td>Core ND</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>PHYH</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>PHYL</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <h2>FOOTER 영역</h2>
+    </div>
+
+</body>
+
+
+
+</html>
